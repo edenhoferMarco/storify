@@ -1,0 +1,8 @@
+[package]
+name = "storify-infrastructure"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+storify-domain = {path = "../storify-domain"}
+storify-application = {path = "../storify-application"}

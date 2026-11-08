@@ -3,17 +3,20 @@
 version = 4
 
 [[package]]
-name = "api"
+name = "storify-application"
+version = "0.1.0"
+dependencies = [
+ "storify-domain",
+]
+
+[[package]]
+name = "storify-domain"
 version = "0.1.0"
 
 [[package]]
-name = "application"
+name = "storify-infrastructure"
 version = "0.1.0"
-
-[[package]]
-name = "domain"
-version = "0.1.0"
-
-[[package]]
-name = "infrastructure"
-version = "0.1.0"
+dependencies = [
+ "storify-application",
+ "storify-domain",
+]
