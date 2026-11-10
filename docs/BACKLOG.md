@@ -6,5 +6,6 @@
   - [ ] Check AI Feedback and optimize code
 
 ## Open Topics
+- [ ] Add build pipeline on GH Actions
 
 ## Parking space
