@@ -1,4 +1,5 @@
 use uuid::Uuid;
+use crate::errors::UserNameError;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FileId(Uuid);
@@ -57,12 +58,23 @@ impl UserId {
 pub struct UserName(String);
 
 impl UserName {
-    pub fn new(name: &str) -> Self {
-        Self (name.to_owned())
+    pub fn new(name: impl Into<String>) -> Result<UserName, UserNameError> {
+        let owned_name = name.into();
+        let validated_name = Self::validate_name(&owned_name)?;
+        
+        Ok(Self (validated_name))
     }
 
     pub fn as_string(&self) -> &str {
         &self.0
+    }
+
+    fn validate_name(name: &str) -> Result<String, UserNameError> {
+        if name.trim().is_empty() {
+            return Err(UserNameError::InvalidUsername(name.to_owned()));
+        }
+
+        Ok(name.to_owned())
     }
 }
 
