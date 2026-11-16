@@ -4,3 +4,4 @@ members = ["storify-application", "storify-domain", "storify-infrastructure"]
 
 [workspace.dependencies]
 uuid = { version = "1.29.2", features = ["v7", "serde"] }
+thiserror = { version = "2.0.21" }
