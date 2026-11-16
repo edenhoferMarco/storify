@@ -3,7 +3,10 @@
 
 ## What to do / do next
 - [ ] Implement domain entities and value objects
-  - [ ] Check AI Feedback and optimize code
+  - [x] Value Objects 
+  - [ ] Entities: 
+    - [ ] Implement Entities
+    - [ ] Check AI Feedback and optimize code
 
 ## Open Topics
 - [ ] Add build pipeline on GH Actions
