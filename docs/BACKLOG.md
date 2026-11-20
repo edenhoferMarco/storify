@@ -2,7 +2,7 @@
 > This file resembles the "backlog" of the project with a collection of topics open to do, where to continue and a parking for ideas
 
 ## What to do / do next
-- [ ] Implement Commands
+- [ ] Implement Commands (ongoing)
 - [ ] Implement Repositories
   - [ ] Traits
   - [ ] Impl
@@ -21,4 +21,4 @@
   - [x] Entities
 
 ## Parking space
-- [ ] Rethink ADR-001 - It is consistent to have all Names as Value Objects like UserName
+- [ ] Are Directory and File belonging to the same Aggregate Root Space? Or are they own Aggregates? Research in DDD book!
