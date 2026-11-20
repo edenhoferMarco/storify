@@ -23,3 +23,9 @@ pub enum SpaceError {
     #[error("Could not create root directory for Space: '{0}'!")]
     RootDirCreationFailed(String)
 }
+
+#[derive(Error, Debug)]
+pub enum FileNameError {
+    #[error("FileName must not be empty! Input: '{0}'")]
+    EmptyFileName(String),
+}

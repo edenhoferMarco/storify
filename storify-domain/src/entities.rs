@@ -1,4 +1,4 @@
-use crate::value_objects::{DirectoryId, DirectoryName, FileId, Permission, SpaceId, SpaceName, UserId, UserName};
+use crate::value_objects::{DirectoryId, DirectoryName, FileId, FileName, Permission, SpaceId, SpaceName, UserId, UserName};
 
 pub struct User {
     id: UserId,
@@ -117,14 +117,13 @@ impl Space {
 
 pub struct StoredFile {
     id: FileId,
-    name: String,
+    name: FileName,
     directory_id: DirectoryId,
 }
 
 impl StoredFile {
-    pub fn new(file_name: impl Into<String>, owning_directory_id: DirectoryId) -> Self {
+    pub fn new(name: FileName, owning_directory_id: DirectoryId) -> Self {
         let id = FileId::new();
-        let name = file_name.into();
 
         Self { id, name, directory_id: owning_directory_id }
     }
@@ -137,7 +136,7 @@ impl StoredFile {
         self.directory_id
     }
 
-    pub fn name(&self) -> &str {
+    pub fn name(&self) -> &FileName {
         &self.name
     }
 }

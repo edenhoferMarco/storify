@@ -1,4 +1,4 @@
-use storify_domain::value_objects::{DirectoryName, SpaceId, SpaceName, UserId, UserName};
+use storify_domain::value_objects::{DirectoryId, DirectoryName, FileName, SpaceId, SpaceName, UserId, UserName};
 
 #[derive(Debug)]
 pub struct CreateUser {
@@ -30,8 +30,20 @@ pub struct CreateDirectory {
 }
 
 impl CreateDirectory {
-    pub fn new(owning_space_id: SpaceId, directory_name: DirectoryName, ) -> Self {
+    pub fn new(owning_space_id: SpaceId, directory_name: DirectoryName) -> Self {
         Self { owning_space_id, directory_name }
+    }
+}
+
+#[derive(Debug)]
+pub struct StoreFile {
+    pub owning_directory_id: DirectoryId,
+    pub file_name: FileName,
+}
+
+impl StoreFile {
+    pub fn new(owning_directory_id: DirectoryId, file_name: FileName) -> Self {
+        Self { owning_directory_id, file_name }
     }
 }
 

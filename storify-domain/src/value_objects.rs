@@ -3,7 +3,7 @@
 #![allow(clippy::new_without_default)]
 
 use uuid::Uuid;
-use crate::errors::{DirectoryNameError, SpaceNameError, UserNameError};
+use crate::errors::{DirectoryNameError, FileNameError, SpaceNameError, UserNameError};
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub struct FileId(Uuid);
@@ -123,6 +123,30 @@ impl DirectoryName {
     fn validate_name(name: &str) -> Result<String, DirectoryNameError> {
         if name.trim().is_empty() {
             return Err(DirectoryNameError::EmptyDirectoryName(name.to_owned()));
+        }
+
+        Ok(name.to_owned())
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct FileName(String);
+
+impl FileName {
+    pub fn new(name: impl Into<String>) -> Result<FileName, FileNameError> {
+        let owned_name = name.into();
+        let validated_name = Self::validate_name(&owned_name)?;
+
+        Ok(Self(validated_name))
+    }
+
+    pub fn as_string(&self) -> &str {
+        &self.0
+    }
+
+    fn validate_name(name: &str) -> Result<String, FileNameError> {
+        if name.trim().is_empty() {
+            return Err(FileNameError::EmptyFileName(name.to_owned()));
         }
 
         Ok(name.to_owned())

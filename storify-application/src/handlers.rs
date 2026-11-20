@@ -1,6 +1,6 @@
-use crate::commands::{CreateDirectory, CreateSpace, CreateUser};
-use storify_domain::entities::{Directory, Space, User};
-use storify_domain::value_objects::{DirectoryId, SpaceId, UserId};
+use crate::commands::{CreateDirectory, CreateSpace, CreateUser, StoreFile};
+use storify_domain::entities::{Directory, Space, StoredFile, User};
+use storify_domain::value_objects::{DirectoryId, FileId, SpaceId, UserId};
 
 pub struct UserHandler {
 
@@ -44,10 +44,24 @@ impl DirectoryHandler {
     }
 }
 
+pub struct FileHandler {
+
+}
+
+impl FileHandler {
+    pub fn receive(command: StoreFile) -> FileId {
+        println!("Received command: {:?}", command);
+        let StoreFile { owning_directory_id, file_name } = command;
+        let new_file = StoredFile::new(file_name, owning_directory_id);
+
+        new_file.id()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-    use storify_domain::value_objects::{DirectoryName, SpaceName, UserName};
+    use storify_domain::value_objects::{DirectoryName, FileName, SpaceName, UserName};
     #[test]
     fn test_receive_create_user() -> Result<(), Box<dyn std::error::Error>> {
         let user_name = UserName::new("Testy Mc Testboy")?;
@@ -82,6 +96,21 @@ mod tests {
         let create_dir_command = CreateDirectory::new(space.id(), dir_name);
 
         DirectoryHandler::receive(create_dir_command);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_receive_store_file() -> Result<(), Box<dyn std::error::Error>> {
+        let user_name = UserName::new("Testy Mc Testboy")?;
+        let user = User::new(user_name);
+        let user_id = user.id();
+        let space_name = SpaceName::new("Testies awesome testspace")?;
+        let space = Space::new(space_name, user_id);
+        let file_name = FileName::new("Testies terrific file")?;
+        let store_file_command = StoreFile::new(space.directory_id(), file_name);
+
+        FileHandler::receive(store_file_command);
 
         Ok(())
     }
