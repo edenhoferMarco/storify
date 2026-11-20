@@ -1,4 +1,4 @@
-use crate::value_objects::{DirectoryId, FileId, Permission, SpaceId, SpaceName, UserId, UserName};
+use crate::value_objects::{DirectoryId, DirectoryName, FileId, Permission, SpaceId, SpaceName, UserId, UserName};
 
 pub struct User {
     id: UserId,
@@ -40,15 +40,14 @@ impl Member {
 
 pub struct Directory {
     id: DirectoryId,
-    name: String,
+    name: DirectoryName,
     owning_space_id: SpaceId,
     files: Vec<FileId>,
     directories: Vec<DirectoryId>,
 }
 
 impl Directory {
-    pub fn new(owning_space_id: SpaceId, name: impl Into<String>) -> Self {
-        let name = name.into();
+    pub fn new(owning_space_id: SpaceId, name: DirectoryName) -> Self {
         let id = DirectoryId::new();
         let directories = Vec::new();
         let files = Vec::new();
@@ -60,7 +59,7 @@ impl Directory {
         self.id
     }
 
-    pub fn name(&self) -> &str {
+    pub fn name(&self) -> &DirectoryName {
         &self.name
     }
 
@@ -90,7 +89,9 @@ impl Space {
         let id = SpaceId::new();
         let owner = Member::new(owning_user_id, Permission::Own);
         let name_as_string = name.as_string();
-        let root_dir = Directory::new(id, format!("{name_as_string}_root"));
+        let root_dir_name = DirectoryName::new(format!("{name_as_string}_root"))
+            .expect("Root directory name cannot be empty if SpaceName is valid!");
+        let root_dir = Directory::new(id, root_dir_name);
         let root_dir_id = root_dir.id();
         let members: Vec<Member> = vec![owner];
 
