@@ -1,4 +1,3 @@
-use crate::errors::UserNameError;
 use crate::value_objects::{DirectoryId, FileId, Permission, SpaceId, UserId, UserName};
 
 pub struct User {
@@ -7,12 +6,12 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(name: impl Into<String>) -> Result<User, UserNameError> {
-        Ok(Self { id: UserId::new(), name: UserName::new(name)? })
+    pub fn new(name: UserName) -> User {
+        Self { id: UserId::new(), name }
     }
 
-    pub fn id(&self) -> &UserId {
-        &self.id
+    pub fn id(&self) -> UserId {
+        self.id
     }
 
     pub fn name(&self) -> &UserName {
@@ -30,12 +29,12 @@ impl Member {
         Self { user_id, permission }
     }
 
-    pub fn user_id(&self) -> &UserId {
-        &self.user_id
+    pub fn user_id(&self) -> UserId {
+        self.user_id
     }
 
-    pub fn permission(&self) -> &Permission {
-        &self.permission
+    pub fn permission(&self) -> Permission {
+        self.permission
     }
 }
 
@@ -57,8 +56,8 @@ impl Directory {
         Self { id, name, owning_space_id, files, directories }
     }
 
-    pub fn id(&self) -> &DirectoryId {
-        &self.id
+    pub fn id(&self) -> DirectoryId {
+        self.id
     }
 
     pub fn name(&self) -> &str {
@@ -92,7 +91,7 @@ impl Space {
         let id = SpaceId::new();
         let owner = Member::new(owning_user_id, Permission::Own);
         let root_dir = Directory::new(id, format!("{name}_root"));
-        let root_dir_id = *root_dir.id();
+        let root_dir_id = root_dir.id();
         let members: Vec<Member> = vec![owner];
 
         Self { id, name, directory_id:root_dir_id, members }
