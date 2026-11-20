@@ -3,7 +3,7 @@
 #![allow(clippy::new_without_default)]
 
 use uuid::Uuid;
-use crate::errors::UserNameError;
+use crate::errors::{SpaceNameError, UserNameError};
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub struct FileId(Uuid);
@@ -74,7 +74,31 @@ impl UserName {
 
     fn validate_name(name: &str) -> Result<String, UserNameError> {
         if name.trim().is_empty() {
-            return Err(UserNameError::InvalidUsername(name.to_owned()));
+            return Err(UserNameError::EmptyUserName(name.to_owned()));
+        }
+
+        Ok(name.to_owned())
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct SpaceName(String);
+
+impl SpaceName {
+    pub fn new(name: impl Into<String>) -> Result<SpaceName, SpaceNameError> {
+        let owned_name = name.into();
+        let validated_name = Self::validate_name(&owned_name)?;
+
+        Ok(Self(validated_name))
+    }
+
+    pub fn as_string(&self) -> &str {
+        &self.0
+    }
+
+    fn validate_name(name: &str) -> Result<String, SpaceNameError> {
+        if name.trim().is_empty() {
+            return Err(SpaceNameError::EmptySpaceName(name.to_owned()));
         }
 
         Ok(name.to_owned())

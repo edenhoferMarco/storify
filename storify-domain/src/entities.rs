@@ -1,4 +1,4 @@
-use crate::value_objects::{DirectoryId, FileId, Permission, SpaceId, UserId, UserName};
+use crate::value_objects::{DirectoryId, FileId, Permission, SpaceId, SpaceName, UserId, UserName};
 
 pub struct User {
     id: UserId,
@@ -80,17 +80,17 @@ impl Directory {
 
 pub struct Space {
     id: SpaceId,
-    name: String,
+    name: SpaceName,
     directory_id: DirectoryId,
     members: Vec<Member>,
 }
 
 impl Space {
-    pub fn new(name: impl Into<String>, owning_user_id: UserId) -> Self {
-        let name = name.into();
+    pub fn new(name: SpaceName, owning_user_id: UserId) -> Self {
         let id = SpaceId::new();
         let owner = Member::new(owning_user_id, Permission::Own);
-        let root_dir = Directory::new(id, format!("{name}_root"));
+        let name_as_string = name.as_string();
+        let root_dir = Directory::new(id, format!("{name_as_string}_root"));
         let root_dir_id = root_dir.id();
         let members: Vec<Member> = vec![owner];
 
@@ -101,7 +101,7 @@ impl Space {
         self.id
     }
 
-    pub fn name(&self) -> &str {
+    pub fn name(&self) -> &SpaceName {
         &self.name
     }
 

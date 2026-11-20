@@ -1,6 +1,6 @@
-use crate::commands::CreateUser;
-use storify_domain::entities::User;
-use storify_domain::value_objects::UserId;
+use crate::commands::{CreateSpace, CreateUser};
+use storify_domain::entities::{Space, User};
+use storify_domain::value_objects::{SpaceId, UserId};
 
 pub struct UserHandler {
 
@@ -9,21 +9,50 @@ pub struct UserHandler {
 impl UserHandler {
     pub fn receive(command: CreateUser) -> UserId {
         println!("Received command: {:?}", command);
-        let new_user = User::new(command.user_name());
+        let CreateUser { user_name } = command;
+        let new_user = User::new(user_name);
+
         new_user.id()
+    }
+}
+
+pub struct SpaceHandler {
+
+}
+
+impl SpaceHandler {
+    pub fn receive(command: CreateSpace) -> SpaceId {
+        println!("Received command: {:?}", command);
+        let CreateSpace { space_name, user_id } = command;
+        let new_space = Space::new(space_name, user_id);
+
+        new_space.id()
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use storify_domain::value_objects::UserName;
+    use storify_domain::value_objects::{SpaceName, UserName};
     #[test]
-    fn test_receive() -> Result<(), Box<dyn std::error::Error>> {
-        let user_name = UserName::new("Der Testboy")?;
-        let command = CreateUser::new(user_name);
+    fn test_receive_create_user() -> Result<(), Box<dyn std::error::Error>> {
+        let user_name = UserName::new("Testy Mc Testboy")?;
+        let create_user_command = CreateUser::new(user_name);
 
-        UserHandler::receive(command);
+        UserHandler::receive(create_user_command);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_receive_create_space() -> Result<(), Box<dyn std::error::Error>> {
+        let user_name = UserName::new("Testy Mc Testboy")?;
+        let user = User::new(user_name);
+        let user_id = user.id();
+        let space_name = SpaceName::new("Testies awesome testspace")?;
+        let create_space_command = CreateSpace::new(space_name, user_id);
+
+        SpaceHandler::receive(create_space_command);
 
         Ok(())
     }
