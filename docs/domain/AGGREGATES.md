@@ -7,6 +7,7 @@
 flowchart TB
     StoredFile --> FileName
     StoredFile --> DirectoryId
+    StoredFile --> FileId
 ```
 ### Directory
 ```mermaid
