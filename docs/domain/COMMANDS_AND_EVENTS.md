@@ -15,8 +15,7 @@
 - *RemoveMember* --> **MemberRemoved**
 
 ## Permission
-- *GrantPermission* --> **PermissionGranted**
-- *RevokePermission* --> **PermissionRevoked**
+- *ChangePermission* --> **PermissionChanged**
 
 ## Directory
 - *CreateDirectory* --> **DirectoryCreated**
