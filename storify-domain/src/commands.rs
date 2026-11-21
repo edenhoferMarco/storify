@@ -1,4 +1,4 @@
-use storify_domain::value_objects::{DirectoryId, DirectoryName, FileId, FileName, Permission, SpaceId, SpaceName, UserId, UserName};
+use crate::value_objects::{DirectoryId, DirectoryName, FileId, FileName, Permission, SpaceId, SpaceName, UserId, UserName};
 
 #[derive(Debug)]
 pub struct CreateUser {

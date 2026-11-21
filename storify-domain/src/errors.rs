@@ -23,3 +23,27 @@ pub enum FileNameError {
     #[error("FileName must not be empty! Input: '{0}'")]
     EmptyFileName(String),
 }
+
+#[derive(Error, Debug)]
+pub enum UserError {
+    #[error("The username '{0}' is already taken!")]
+    UsernameAlreadyTaken(String),
+}
+
+#[derive(Error, Debug)]
+pub enum SpaceError {
+    #[error("An internal error happened! '{0}")]
+    InternalError(String),
+}
+
+#[derive(Error, Debug)]
+pub enum DirectoryError {
+    #[error("An internal error happened! '{0}")]
+    InternalError(String),
+}
+
+#[derive(Error, Debug)]
+pub enum FileError {
+    #[error("An internal error happened! '{0}")]
+    InternalError(String),
+}
