@@ -1,4 +1,4 @@
-use crate::commands::{CreateDirectory, CreateSpace, CreateUser, StoreFile};
+use storify_domain::commands::{CreateDirectory, CreateSpace, CreateUser, StoreFile};
 use storify_domain::entities::{Directory, Space, StoredFile, User};
 use storify_domain::value_objects::{DirectoryId, FileId, SpaceId, UserId};
 

@@ -1,8 +1,8 @@
-use std::fs::File;
 use crate::commands::{CreateDirectory, CreateSpace, CreateUser, StoreFile};
 use crate::entities::{Directory, Space, User};
 use crate::errors::{DirectoryError, FileError, SpaceError, UserError};
-use crate::value_objects::{SpaceId, UserId, UserName};
+use crate::value_objects::{SpaceId, UserId};
+use std::fs::File;
 
 pub trait UserRepository {
     fn create_user(&self, command: CreateUser) -> Result<User, UserError>;
