@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 storify-domain = {path = "../storify-domain"}
+thiserror = { workspace = true }
